@@ -1,45 +1,47 @@
 /* ==========================================================================
-   Shared Lesson & Reference Stylesheet
-   Design Philosophy: Tufte-inspired minimalism, clean typography, responsive.
+   Stage Lighting Design Studio &bull; Atmospheric Theatrical Theme
+   Concept: The Lighting Console & Black-Box Theatre
+   Palette: Stage Matte Obsidian, 3200K Tungsten Amber, 5600K Steel Blue Rim,
+            and Velvet Ruby Accent.
    ========================================================================== */
 
 :root {
-  --font-serif: "ETBembo", "Palatino", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  --font-serif: "Playfair Display", "Didot", "Palatino", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SFMono-Regular", "Consolas", "Liberation Mono", Menlo, monospace;
 
-  --bg-color: #faf8f5;
-  --text-color: #111111;
-  --text-muted: #555555;
-  --card-bg: #ffffff;
-  --border-color: #e5e0d8;
-  --accent: #b45309;       /* Stage amber */
-  --accent-light: #fef3c7;
-  --accent-cool: #1d4ed8;  /* Stage steel blue */
-  --accent-cool-light: #dbeafe;
-  --success: #15803d;
-  --error: #b91c1c;
-  --radius: 8px;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  /* Theatrical Stage Colors */
+  --bg-stage: #090a0f;               /* Black box auditorium */
+  --bg-booth: #12141c;               /* Console desk surface */
+  --bg-booth-hover: #181b26;         /* Elevated panel surface */
+  --border-console: #232838;         /* Brushed metal panel edge */
+  --border-focus: #f59e0b;           /* Focused beam indicator */
+
+  --text-main: #f1f3f7;              /* Crisp white cue text */
+  --text-muted: #8e95a5;             /* Secondary dimmer notes */
+  --text-dim: #5c6375;               /* Inactive channel text */
+
+  /* Light Spectrum Accents */
+  --tungsten: #f59e0b;               /* 3000K Halogen & Diya flame */
+  --tungsten-glow: rgba(245, 158, 11, 0.18);
+  --tungsten-bright: #fbbf24;
+  --steel-blue: #38bdf8;             /* Theatrical Gel 201 / CTB rim */
+  --steel-blue-glow: rgba(56, 189, 248, 0.18);
+  --steel-blue-dim: #1e3a5f;
+  --velvet-ruby: #e11d48;            /* Stage drape & dramatic cue */
+  --dmx-green: #10b981;              /* Signal OK indicator */
+  --dmx-green-glow: rgba(16, 185, 129, 0.2);
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --shadow-booth: 0 4px 20px rgba(0, 0, 0, 0.45);
+  --glow-beam: 0 0 24px rgba(245, 158, 11, 0.22);
+  --glow-rim: 0 0 20px rgba(56, 189, 248, 0.25);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-color: #121316;
-    --text-color: #e5e7eb;
-    --text-muted: #9ca3af;
-    --card-bg: #1c1d22;
-    --border-color: #2e3039;
-    --accent: #f59e0b;
-    --accent-light: #2d2415;
-    --accent-cool: #60a5fa;
-    --accent-cool-light: #16243b;
-    --success: #22c55e;
-    --error: #ef4444;
-    --shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-  }
-}
-
+/* Base Setup */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -47,45 +49,83 @@
 }
 
 body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: var(--font-serif);
-  font-size: 1.15rem;
-  line-height: 1.65;
-  padding: 2.5rem 1.25rem;
+  background-color: var(--bg-stage);
+  background-image: 
+    radial-gradient(ellipse 80% 40% at 50% -10%, rgba(245, 158, 11, 0.08) 0%, transparent 75%),
+    linear-gradient(to bottom, transparent 0%, #06070a 100%);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 1.12rem;
+  line-height: 1.7;
+  padding: 3rem 1.25rem;
   display: flex;
   justify-content: center;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 .container {
   width: 100%;
-  max-width: 780px;
+  max-width: 820px;
 }
 
-/* Header & Meta */
+/* ==========================================================================
+   Header & Theatrical Vignette
+   ========================================================================== */
 header {
-  border-bottom: 2px solid var(--border-color);
-  padding-bottom: 1.5rem;
-  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-console);
+  padding-bottom: 1.75rem;
+  margin-bottom: 2.75rem;
+  position: relative;
+}
+
+header::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 90px;
+  height: 2px;
+  background: linear-gradient(to right, var(--tungsten), transparent);
+  box-shadow: 0 0 8px var(--tungsten);
 }
 
 .lesson-tag {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   text-transform: uppercase;
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
+  font-size: 0.76rem;
+  letter-spacing: 0.15em;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--tungsten-bright);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+  padding: 0.2rem 0.55rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: var(--radius-sm);
+}
+
+.lesson-tag::before {
+  content: "";
   display: inline-block;
-  margin-bottom: 0.4rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tungsten);
+  box-shadow: 0 0 6px var(--tungsten);
 }
 
 h1 {
-  font-size: 2.25rem;
-  line-height: 1.25;
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  line-height: 1.22;
   font-weight: 600;
+  color: #ffffff;
   margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .subtitle {
@@ -93,124 +133,141 @@ h1 {
   font-size: 1.05rem;
   color: var(--text-muted);
   font-weight: 400;
+  max-width: 700px;
 }
 
-/* Typography */
+/* ==========================================================================
+   Typography & Flow
+   ========================================================================== */
 h2 {
-  font-size: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
   font-weight: 600;
-  margin: 2.25rem 0 1rem;
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.3rem;
+  color: #ffffff;
+  margin: 2.5rem 0 1rem;
+  border-bottom: 1px solid var(--border-console);
+  padding-bottom: 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 h3 {
+  font-family: var(--font-sans);
   font-size: 1.25rem;
   font-weight: 600;
-  margin: 1.5rem 0 0.5rem;
+  color: var(--tungsten-bright);
+  margin: 1.75rem 0 0.5rem;
 }
 
 p {
   margin-bottom: 1.25rem;
+  color: var(--text-main);
 }
 
 ul, ol {
-  margin: 0 0 1.25rem 1.5rem;
+  margin: 0 0 1.35rem 1.5rem;
+  color: var(--text-main);
 }
 
 li {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.45rem;
 }
 
 strong {
   font-weight: 600;
+  color: #ffffff;
 }
 
 code {
   font-family: var(--font-mono);
   font-size: 0.9em;
-  background-color: var(--border-color);
-  padding: 0.15em 0.35em;
-  border-radius: 4px;
+  background-color: #191c26;
+  border: 1px solid var(--border-console);
+  color: var(--steel-blue);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
 }
 
-/* Callouts & Notes */
+/* ==========================================================================
+   Callouts & Theatrical Cue Boxes
+   ========================================================================== */
 .callout {
-  background-color: var(--card-bg);
-  border-left: 4px solid var(--accent);
-  padding: 1.15rem 1.4rem;
-  margin: 1.5rem 0;
-  border-radius: 0 var(--radius) var(--radius) 0;
-  box-shadow: var(--shadow);
+  background-color: var(--bg-booth);
+  border: 1px solid var(--border-console);
+  border-left: 4px solid var(--tungsten);
+  padding: 1.25rem 1.5rem;
+  margin: 1.75rem 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  box-shadow: var(--shadow-booth);
+  position: relative;
+  overflow: hidden;
+}
+
+.callout::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--tungsten-glow) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .callout.tip {
-  border-left-color: var(--accent-cool);
-  background-color: var(--accent-cool-light);
+  border-left-color: var(--steel-blue);
 }
 
-.callout p:last-child {
-  margin-bottom: 0;
+.callout.tip::before {
+  background: linear-gradient(90deg, var(--steel-blue-glow) 0%, transparent 50%);
 }
 
 .callout-title {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.82rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.35rem;
-  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.4rem;
+  color: var(--tungsten);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 .callout.tip .callout-title {
-  color: var(--accent-cool);
+  color: var(--steel-blue);
 }
 
-/* Interactive Simulator Container */
+/* ==========================================================================
+   Interactive Lighting Simulator Deck
+   ========================================================================== */
 .simulator-card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  margin: 2rem 0;
-  box-shadow: var(--shadow);
+  background: var(--bg-booth);
+  border: 1px solid var(--border-console);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin: 2.25rem 0;
+  box-shadow: var(--shadow-booth);
+  position: relative;
 }
 
 .simulator-title {
-  font-family: var(--font-sans);
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
   margin-bottom: 0.25rem;
 }
 
 .simulator-subtitle {
-  font-family: var(--font-sans);
   font-size: 0.9rem;
   color: var(--text-muted);
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.35rem;
 }
 
-/* Controls */
-.control-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 1rem;
-  margin-top: 1.25rem;
-  font-family: var(--font-sans);
-  font-size: 0.88rem;
-}
-
-.control-item label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.35rem;
-}
-
-.control-item input[type="range"] {
-  width: 100%;
-}
-
+/* Button & Console Switches */
 .button-group {
   display: flex;
   flex-wrap: wrap;
@@ -220,67 +277,83 @@ code {
 .btn {
   font-family: var(--font-sans);
   font-size: 0.85rem;
-  padding: 0.45rem 0.85rem;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  background: var(--card-bg);
-  color: var(--text-color);
+  font-weight: 500;
+  padding: 0.45rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-console);
+  background: #171a24;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
 }
 
 .btn:hover {
-  border-color: var(--accent);
-  background-color: var(--accent-light);
+  color: #ffffff;
+  border-color: #3f475e;
+  background-color: #1e2230;
 }
 
 .btn.active {
-  background-color: var(--accent);
-  color: #ffffff;
-  border-color: var(--accent);
+  background: linear-gradient(180deg, #2a2216 0%, #1f180d 100%);
+  color: var(--tungsten-bright);
+  border-color: var(--tungsten);
+  box-shadow: 0 0 10px var(--tungsten-glow);
+  font-weight: 600;
 }
 
-/* Canvas / Stage Viewport */
-.stage-viewport {
-  width: 100%;
-  height: 280px;
-  background-color: #050608;
-  border-radius: 6px;
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Faders / Sliders */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: #1e2230;
+  border-radius: 3px;
+  outline: none;
+  border: 1px solid var(--border-console);
 }
 
-/* Quiz Styles */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--tungsten);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--tungsten);
+  border: 2px solid #ffffff;
+}
+
+/* ==========================================================================
+   Quiz Deck (Theatrical Examination)
+   ========================================================================== */
 .quiz-section {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  margin: 2.5rem 0;
-  box-shadow: var(--shadow);
+  background: var(--bg-booth);
+  border: 1px solid var(--border-console);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin: 2.75rem 0;
+  box-shadow: var(--shadow-booth);
 }
 
 .quiz-header {
-  font-family: var(--font-sans);
-  font-size: 1.15rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.3rem;
 }
 
 .quiz-instruction {
-  font-family: var(--font-sans);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.75rem;
 }
 
 .quiz-question {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2.25rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--border-console);
 }
 
 .quiz-question:last-child {
@@ -290,56 +363,58 @@ code {
 }
 
 .question-text {
-  font-family: var(--font-sans);
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  margin-bottom: 0.85rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
 }
 
 .option-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.6rem;
 }
 
 .quiz-option {
   font-family: var(--font-sans);
-  font-size: 0.92rem;
-  padding: 0.65rem 1rem;
-  border-radius: 6px;
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-color);
-  color: var(--text-color);
+  font-size: 0.95rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-console);
+  background: #141722;
+  color: var(--text-main);
   text-align: left;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
   width: 100%;
 }
 
 .quiz-option:hover:not(:disabled) {
-  border-color: var(--accent);
-  background-color: var(--card-bg);
+  border-color: var(--tungsten);
+  background: #1a1e2c;
+  color: #ffffff;
+  box-shadow: 0 0 8px var(--tungsten-glow);
 }
 
 .quiz-option.correct {
-  background-color: #ecfdf5 !important;
-  border-color: var(--success) !important;
-  color: var(--success) !important;
+  background-color: rgba(16, 185, 129, 0.12) !important;
+  border-color: var(--dmx-green) !important;
+  color: #a7f3d0 !important;
+  box-shadow: 0 0 12px var(--dmx-green-glow);
   font-weight: 600;
 }
 
 .quiz-option.incorrect {
-  background-color: #fef2f2 !important;
-  border-color: var(--error) !important;
-  color: var(--error) !important;
+  background-color: rgba(225, 29, 72, 0.12) !important;
+  border-color: var(--velvet-ruby) !important;
+  color: #fecdd3 !important;
 }
 
 .quiz-feedback {
-  font-family: var(--font-sans);
-  font-size: 0.88rem;
-  margin-top: 0.75rem;
-  padding: 0.65rem 0.9rem;
-  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-top: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
   display: none;
 }
 
@@ -348,58 +423,317 @@ code {
 }
 
 .quiz-feedback.success {
-  background-color: #ecfdf5;
-  color: var(--success);
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #6ee7b7;
 }
 
 .quiz-feedback.error {
-  background-color: #fef2f2;
-  color: var(--error);
+  background: rgba(225, 29, 72, 0.1);
+  border: 1px solid rgba(225, 29, 72, 0.3);
+  color: #fda4af;
 }
 
-/* Primary Source & Navigation Footer */
+/* ==========================================================================
+   Primary Source Card & Navigation Footer
+   ========================================================================== */
 .primary-source-card {
-  border: 1px dashed var(--accent);
-  background-color: var(--accent-light);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.4rem;
-  margin: 2.5rem 0 1.5rem;
-  font-family: var(--font-sans);
+  border: 1px dashed var(--tungsten);
+  background: rgba(245, 158, 11, 0.05);
+  border-radius: var(--radius-md);
+  padding: 1.35rem 1.6rem;
+  margin: 2.75rem 0 1.75rem;
 }
 
 .primary-source-title {
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  margin-bottom: 0.35rem;
+  letter-spacing: 0.12em;
+  color: var(--tungsten-bright);
+  margin-bottom: 0.4rem;
 }
 
 .primary-source-card a {
-  color: #111111;
-  font-weight: 700;
+  color: #ffffff;
+  font-weight: 600;
   text-decoration: underline;
+  text-decoration-color: var(--tungsten);
 }
 
 .lesson-footer {
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   color: var(--text-muted);
-  border-top: 1px solid var(--border-color);
-  padding-top: 1.5rem;
-  margin-top: 2.5rem;
+  border-top: 1px solid var(--border-console);
+  padding-top: 1.75rem;
+  margin-top: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .lesson-footer a {
-  color: var(--accent);
+  color: var(--tungsten-bright);
   text-decoration: none;
   font-weight: 600;
+  transition: color 0.15s ease;
 }
 
 .lesson-footer a:hover {
-  text-decoration: underline;
+  color: #ffffff;
+  text-shadow: 0 0 8px var(--tungsten);
+}
+
+/* ==========================================================================
+   Dashboard Components & Tables
+   ========================================================================== */
+.stat-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 1.75rem 0 2.5rem;
+}
+
+.stat-card {
+  background: var(--bg-booth);
+  border: 1px solid var(--border-console);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1.35rem;
+  box-shadow: var(--shadow-booth);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--tungsten), transparent);
+}
+
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--tungsten-bright);
+  line-height: 1.15;
+  margin-bottom: 0.25rem;
+  text-shadow: 0 0 12px var(--tungsten-glow);
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.phase-block {
+  background: var(--bg-booth);
+  border: 1px solid var(--border-console);
+  border-radius: var(--radius-lg);
+  padding: 1.6rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow-booth);
+}
+
+.phase-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-console);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.phase-tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--tungsten-bright);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.item-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.95rem 1.25rem;
+  background: #141722;
+  border: 1px solid var(--border-console);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.item-row:hover {
+  border-color: var(--tungsten);
+  background: #1a1e2c;
+  transform: translateX(3px);
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.1);
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.item-title {
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: #ffffff;
+}
+
+.item-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.28rem 0.65rem;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.badge-ready {
+  background: rgba(16, 185, 129, 0.15);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 8px var(--dmx-green-glow);
+}
+
+.badge-next {
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 8px var(--steel-blue-glow);
+}
+
+.badge-planned {
+  background: #191c28;
+  color: var(--text-dim);
+  border: 1px solid #282e40;
+}
+
+.quick-card {
+  background: var(--bg-booth);
+  border: 1px solid var(--border-console);
+  border-radius: var(--radius-md);
+  padding: 1.35rem;
+  box-shadow: var(--shadow-booth);
+}
+
+.quick-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin-top: 0;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid var(--border-console);
+  padding-bottom: 0.5rem;
+}
+
+.quick-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.9rem;
+}
+
+.quick-card li a {
+  color: var(--tungsten-bright);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.quick-card li a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 6px var(--tungsten);
+}
+
+/* Reference Tables */
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  margin: 1.75rem 0;
+  background: var(--bg-booth);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-booth);
+}
+
+.ref-table th, .ref-table td {
+  border: 1px solid var(--border-console);
+  padding: 0.85rem 1.1rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.ref-table th {
+  background-color: #171b26;
+  color: var(--tungsten-bright);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ref-table tr:hover td {
+  background-color: #161924;
+}
+
+.term {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Print Overrides for Physical Cheat Sheets */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    padding: 0;
+  }
+  .container { max-width: 100%; }
+  .lesson-footer, .button-group, .simulator-card, input[type="range"] { display: none; }
+  .ref-table th { background: #eeeeee; color: #000000; }
+  .ref-table td { border-color: #cccccc; color: #111111; }
+  .callout { border-color: #666666; background: #fafafa; }
 }

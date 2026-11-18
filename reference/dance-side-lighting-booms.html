@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reference: Dance Side Lighting Booms & Angle Geometry</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .boom-diagram {
+      background: var(--bg-booth);
+      border: 1px solid var(--border-console);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .boom-visual {
+      width: 140px;
+      height: 340px;
+      position: relative;
+      background: #090a0f;
+      border: 1px solid var(--border-console);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .boom-pipe {
+      width: 6px;
+      height: 290px;
+      background: #555c6e;
+      position: absolute;
+      top: 15px;
+    }
+    .boom-base {
+      width: 70px;
+      height: 14px;
+      background: #2a2e3d;
+      border-radius: 4px;
+      position: absolute;
+      bottom: 15px;
+      border: 1px solid #444b5e;
+    }
+    .fixture-box {
+      width: 44px;
+      height: 24px;
+      background: var(--tungsten);
+      border-radius: 3px;
+      position: absolute;
+      left: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #000000;
+      box-shadow: 0 0 10px var(--tungsten-glow);
+    }
+    .fix-head { top: 35px; }
+    .fix-waist { top: 135px; }
+    .fix-shin { top: 245px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="lesson-tag">Reference Document 02</span>
+      <h1>Dance Side Lighting Booms & Angle Geometry</h1>
+      <p class="subtitle">Anatomy of stage wing boom trees, fixture heights, beam spreads, and spill management for live dance.</p>
+    </header>
+
+    <section>
+      <h2>The Dance Boom Tree Anatomy</h2>
+      <p>
+        In traditional theatre drama, light comes primarily from the front to light faces. In dance, <strong>the body is the kinetic sculpture</strong>. Because dancers move across the floor in wide lateral patterns, the single most critical rigging element is the <strong>side boom (lighting tree)</strong> standing in each stage wing.
+      </p>
+
+      <div class="boom-diagram">
+        <div class="boom-visual">
+          <div class="boom-pipe"></div>
+          <div class="fixture-box fix-head">HEAD</div>
+          <div class="fixture-box fix-waist">WAIST</div>
+          <div class="fixture-box fix-shin">SHIN</div>
+          <div class="boom-base"></div>
+        </div>
+        <div style="flex: 1; min-width: 260px;">
+          <h3 style="margin-top: 0;">Standard 3-Tier Boom Layout</h3>
+          <p style="font-size: 0.95rem;">
+            A standard boom consists of a heavy cast-iron base (50+ lbs) weighed down with sandbags, holding a 10–12 ft vertical 1.5-inch steel pipe. It holds three fixture tiers shooting horizontally across the stage:
+          </p>
+          <ul style="font-size: 0.92rem;">
+            <li><strong>Head / High-Side (8–10 ft):</strong> Angles down across shoulders and neck. Sculpts torso, upper arms (<em>Natyarambham</em>), and headpieces without throwing long shadows on the deck.</li>
+            <li><strong>Mid-Side / Waist (4–5 ft):</strong> Shoots across the hips, waistline, and hands held in front of the abdomen (<em>Pataka, Tripataka</em> mudras).</li>
+            <li><strong>Shin-Buster (1–2 ft):</strong> The dance signature. Points slightly downward or dead-level across the floorboards. Highlights ankles, feet (<em>Adavus</em>), and bells (<em>Salangai/Ghungroos</em>).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Why Side Light Prevents Stage Clutter & Spill</h2>
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Lighting Position</th>
+            <th>Beam Direction</th>
+            <th>Spill & Background Impact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="term">Front of House (FOH)</td>
+            <td>Points upstage directly toward backdrop</td>
+            <td><strong>High Risk:</strong> Casts large, distracting actor shadows onto the cyclorama or acoustic back wall, washing out projected colors.</td>
+          </tr>
+          <tr>
+            <td class="term">Wing Side Booms</td>
+            <td>Shoots straight across stage into opposite wing black drapes (legs)</td>
+            <td><strong>Zero Spill:</strong> Light is absorbed entirely by opposite black masking curtains. The upstage backdrop remains completely pristine.</td>
+          </tr>
+          <tr>
+            <td class="term">High Backlight</td>
+            <td>Points downstage toward audience, hitting performer backs</td>
+            <td><strong>High Separation:</strong> Lays a bright rim along hair and shoulders. The floor pool stays tightly behind the performer.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Boom Rules for Small Indian Sabhas</h2>
+      <ol>
+        <li><strong>Sandbags are Mandatory:</strong> Classical Indian dance involves powerful foot stomping and wide arm sweeps. Every boom base must have at least 20–30 kg of counterweight so vibrations or accidental wing bumps never tip the pipe.</li>
+        <li><strong>Shutter & Barndoor Cuts:</strong> Keep the shin-buster beam clipped off the stage floor immediately beneath the wing so audiences sitting in the front rows don't see a bright lens reflection.</li>
+        <li><strong>Opposite Wing Symmetry:</strong> For small stages, pair each Stage Left boom with a mirror Stage Right boom. This creates balanced high-side and low-side cross-washes across the center acting zone.</li>
+      </ol>
+    </section>
+
+    <footer class="lesson-footer">
+      <span><a href="../index.html">&larr; Dashboard</a> &bull; Reference Cheat Sheet #02</span>
+      <span><a href="../lessons/0002-lighting-angles-and-dance-body-geometry.html">Open Lesson 02 &rarr;</a></span>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 02: Lighting Angles & Dance Body Geometry</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .sim-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    #angleCanvas {
+      width: 100%;
+      height: 340px;
+      background-color: #08090d;
+      border-radius: 6px;
+      border: 1px solid var(--border-console);
+    }
+    .angle-switches {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+    .switch-card {
+      background: #141722;
+      border: 1px solid var(--border-console);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .switch-card:hover {
+      border-color: #3b4359;
+    }
+    .switch-card.active {
+      border-color: var(--tungsten);
+      background: #1d2130;
+      box-shadow: 0 0 10px var(--tungsten-glow);
+    }
+    .switch-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .switch-card.active .switch-label {
+      color: var(--tungsten-bright);
+    }
+    .switch-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #ffffff;
+    }
+    .anatomical-tracker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: #10121a;
+      border: 1px solid var(--border-console);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+    .anat-tag {
+      padding: 0.2rem 0.5rem;
+      border-radius: 3px;
+      background: #191c28;
+      color: var(--text-dim);
+      border: 1px solid #282d3e;
+      transition: all 0.2s ease;
+    }
+    .anat-tag.lit {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--tungsten-bright);
+      border-color: rgba(245, 158, 11, 0.4);
+      box-shadow: 0 0 6px var(--tungsten-glow);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="lesson-tag">Lesson 0002 &bull; Angles & Geometry</span>
+      <h1>Lighting Angles & Dance Body Geometry</h1>
+      <p class="subtitle">Why traditional theatrical front lighting fails dancers, and how wing boom trees sculpt form in motion.</p>
+    </header>
+
+    <section>
+      <h2>The Theater vs. Dance Dilemma</h2>
+      <p>
+        In traditional spoken theater, actors stand relatively still and deliver dialogue. Lighting them is primarily about <strong>facial visibility</strong>: Stanley McCandless's classical system places fixtures at a 45° angle above and 45° to the side of the actor so their eyes and mouth are brightly illuminated without harsh nose shadows.
+      </p>
+      <p>
+        Now place a Bharatanatyam, Kathak, or Odissi dancer on that same stage.
+      </p>
+      <p>
+        Dance is <strong>kinetic sculpture in three-dimensional space</strong>. A classical Indian dancer does not just move their eyes and lips; their art lives in:
+      </p>
+      <ul>
+        <li><strong>Araimandi:</strong> The fundamental half-sitting posture where knees turn outward, forming a dynamic diamond/triangle geometry.</li>
+        <li><strong>Natyarambham & Hasthas:</strong> Arms held horizontally arched with intricate finger mudras creating shapes in space.</li>
+        <li><strong>Tala & Adavus:</strong> Stomping footwork, heel strikes, and bronze ankle bells (<em>Salangai / Ghungroos</em>).</li>
+      </ul>
+      <p>
+        If you only light this from the front, you commit the cardinal sin of dance design: <strong>the limbs dissolve into the torso, the footwork has zero visual pop, and large distracting actor shadows splatter across the upstage backdrop.</strong>
+      </p>
+    </section>
+
+    <section>
+      <h2>The Dance Lighting Secret: The Side Boom</h2>
+      <p>
+        To reveal a dancer's muscular tension and architectural body lines, professional dance designers turn off 80% of front lighting and bring up <strong>side lighting</strong> from vertical pipes (booms) hidden in the stage wings.
+      </p>
+
+      <div class="callout">
+        <div class="callout-title">The Cross-Stage Physics Advantage</div>
+        <p>Because side lights shoot straight horizontally across the stage into the opposite wing's black curtains, <strong>zero light touches the back cyclorama</strong>. The dancer pops in luminous 3D against an immaculate dark canvas.</p>
+      </div>
+
+      <h3>The Three Crucial Boom Heights</h3>
+      <ol>
+        <li>
+          <strong>The Shin-Buster (1–2 ft off the deck):</strong>
+          Mounted at ankle level, this fixture shoots dead across the floor. It lights the feet, ankle bells, and the crisp geometry of the <em>Araimandi</em> posture without washing out the dancer's face.
+        </li>
+        <li>
+          <strong>The Mid-Side / Waist (4–5 ft high):</strong>
+          Cuts across the hips, thighs, and lower hand mudras held in front of the belly.
+        </li>
+        <li>
+          <strong>The Head / High-Side (8–10 ft high):</strong>
+          Shoots at a downward diagonal across shoulders, upper arms, and neck, chiseling the torso without casting long floor shadows.
+        </li>
+      </ol>
+    </section>
+
+    <!-- Interactive Beam Simulator -->
+    <section class="simulator-card">
+      <div class="simulator-title">Interactive Angle Lab: Sculpting Dance Geometry</div>
+      <div class="simulator-subtitle">Click fixtures below to activate individual light paths. Watch which anatomical zones get illuminated and whether shadows spill onto the backdrop.</div>
+
+      <div class="sim-display">
+        <canvas id="angleCanvas" width="720" height="340"></canvas>
+      </div>
+
+      <!-- Anatomical Coverage Indicator -->
+      <div class="anatomical-tracker">
+        <span style="color: var(--text-muted); margin-right: 0.5rem;">Lit Zones:</span>
+        <span class="anat-tag" id="tagFace">Face (Abhinaya)</span>
+        <span class="anat-tag" id="tagArms">Arms & Mudras</span>
+        <span class="anat-tag" id="tagTorso">Torso Sculpture</span>
+        <span class="anat-tag" id="tagKnees">Araimandi Knees</span>
+        <span class="anat-tag" id="tagFeet">Feet & Ghungroos</span>
+        <span class="anat-tag" id="tagRim">Silhouette Rim</span>
+      </div>
+
+      <!-- Fixture Toggles -->
+      <div class="angle-switches">
+        <div class="switch-card" id="swFOH">
+          <span class="switch-label">Front Pipe</span>
+          <span class="switch-name">45° FOH Key</span>
+        </div>
+        <div class="switch-card active" id="swHigh">
+          <span class="switch-label">Wing Boom</span>
+          <span class="switch-name">High Side (8ft)</span>
+        </div>
+        <div class="switch-card" id="swMid">
+          <span class="switch-label">Wing Boom</span>
+          <span class="switch-name">Mid Side (4ft)</span>
+        </div>
+        <div class="switch-card active" id="swShin">
+          <span class="switch-label">Wing Deck</span>
+          <span class="switch-name">Shin-Buster (1ft)</span>
+        </div>
+        <div class="switch-card active" id="swBack">
+          <span class="switch-label">Overhead</span>
+          <span class="switch-name">High Backlight</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Retrieval Quiz -->
+    <section class="quiz-section">
+      <div class="quiz-header">Check Your Knowledge: Storage Retrieval</div>
+      <div class="quiz-instruction">Test your recall of fixture positions, angle geometry, and dance anatomy. Immediate feedback is provided.</div>
+      <div id="quizContainer"></div>
+    </section>
+
+    <!-- Primary Source Card -->
+    <section class="primary-source-card">
+      <div class="primary-source-title">Recommended Primary Source Reading</div>
+      <p>
+        Read Chapter 7 ("Lighting for Dance") in Linda Essig's 
+        <a href="https://www.routledge.com/Lighting-and-the-Design-Idea/Essig-Bocchino/p/book/9780367208943" target="_blank" rel="noopener">Lighting and the Design Idea</a>. Explore how legendary dance lighting pioneer <strong>Jean Rosenthal</strong> revolutionized Martha Graham's choreography by inventing modern side boom lighting.
+      </p>
+    </section>
+
+    <div class="callout tip">
+      <div class="callout-title">Have a Question on Boom Rigging?</div>
+      <p>Wondering how to stabilize boom pipes on sabha stages with uneven wooden floorboards? Ask your agent directly in the chat!</p>
+    </div>
+
+    <footer class="lesson-footer">
+      <span><a href="../index.html">&larr; Dashboard</a> &bull; <a href="../reference/dance-side-lighting-booms.html">Ref Sheet 02: Booms</a></span>
+      <span>Next: Lesson 03 &bull; Color Temperature & Costume Silks &rarr;</span>
+    </footer>
+  </div>
+
+  <script src="../assets/quiz.js"></script>
+  <script>
+    // --- Quiz Data (Strict Word Count Enforced) ---
+    const quizData = [
+      {
+        question: "What is the primary operational advantage of placing shin-buster fixtures at deck level?",
+        options: [
+          "They illuminate rapid footwork without backdrop spill.",
+          "They replace expensive overhead rigging with cheap cables.",
+          "They warm up cold auditorium stages during winter.",
+          "They automatically synchronize cues with live percussion beats."
+        ],
+        correct: 0,
+        explanation: "Shin-busters shoot horizontally across the floorboards, vividly highlighting ankle bells (Salangai/Ghungroos) and footwork while passing harmlessly into the opposite wing drapes."
+      },
+      {
+        question: "Why do dance lighting designers prefer side booms over front lights for limb definition?",
+        options: [
+          "Front lights consume significantly higher electrical line current.",
+          "Side beams carve dynamic silhouettes through cross-stage shadows.",
+          "Front lamps cause delicate silk garments to fade.",
+          "Side fixtures never require regular bulb replacement maintenance."
+        ],
+        correct: 1,
+        explanation: "Side light hits the sides of the limbs and torso, creating crisp edge highlights and directional shadows that reveal muscular tension and three-dimensional posture."
+      },
+      {
+        question: "In an Indian classical dance recital, which angle preserves facial expressions while preventing flat washout?",
+        options: [
+          "Steep downlight hanging straight over the performer.",
+          "Low footlight mounted along front stage edge.",
+          "Diagonal forty-five degree key light from front.",
+          "Sharp horizontal shin light from side wings."
+        ],
+        correct: 2,
+        explanation: "A 45° front diagonal key provides essential facial visibility for Abhinaya (expressions) while casting subtle natural shadows that keep the nose and cheekbones dimensional."
+      }
+    ];
+
+    initQuiz("quizContainer", quizData);
+
+    // --- Interactive Angle Canvas Simulator ---
+    const canvas = document.getElementById("angleCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const state = {
+      foh: false,
+      highSide: true,
+      midSide: false,
+      shin: true,
+      back: true
+    };
+
+    function updateTags() {
+      document.getElementById("tagFace").classList.toggle("lit", state.foh);
+      document.getElementById("tagArms").classList.toggle("lit", state.highSide || state.foh);
+      document.getElementById("tagTorso").classList.toggle("lit", state.highSide || state.midSide);
+      document.getElementById("tagKnees").classList.toggle("lit", state.midSide || state.shin);
+      document.getElementById("tagFeet").classList.toggle("lit", state.shin);
+      document.getElementById("tagRim").classList.toggle("lit", state.back);
+    }
+
+    function render() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // 1. Stage Floor & Backdrop
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+      bgGrad.addColorStop(0, "#06070a");
+      bgGrad.addColorStop(0.68, "#0e1119");
+      bgGrad.addColorStop(0.68, "#151824");
+      bgGrad.addColorStop(1, "#07080d");
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Floor line
+      ctx.strokeStyle = "#252b3d";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.68);
+      ctx.lineTo(w, h * 0.68);
+      ctx.stroke();
+
+      const cx = w / 2;
+      const cy = h * 0.64;
+
+      // 2. FOH Shadow Spill on Backdrop
+      if (state.foh) {
+        ctx.save();
+        ctx.fillStyle = "rgba(0, 0, 0, 0.55)";
+        ctx.beginPath();
+        // Displaced shadow cast behind on the back wall
+        ctx.ellipse(cx + 40, cy - 20, 35, 75, 0.15, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Warning annotation for FOH spill
+        ctx.fillStyle = "rgba(225, 29, 72, 0.8)";
+        ctx.font = "11px monospace";
+        ctx.fillText("! FOH Backdrop Spill Shadow", cx + 45, cy - 80);
+        ctx.restore();
+      }
+
+      // 3. Light Beams Visualized
+      // Shin beam (deck level cross-shoot)
+      if (state.shin) {
+        const shinGrad = ctx.createLinearGradient(0, cy + 30, cx, cy + 30);
+        shinGrad.addColorStop(0, "rgba(245, 158, 11, 0.28)");
+        shinGrad.addColorStop(1, "rgba(245, 158, 11, 0.02)");
+        ctx.fillStyle = shinGrad;
+        ctx.beginPath();
+        ctx.moveTo(0, cy + 28);
+        ctx.lineTo(cx + 30, cy + 38);
+        ctx.lineTo(cx - 30, cy + 38);
+        ctx.lineTo(0, cy + 15);
+        ctx.fill();
+      }
+
+      // High side beam
+      if (state.highSide) {
+        const highGrad = ctx.createLinearGradient(0, cy - 80, cx, cy - 30);
+        highGrad.addColorStop(0, "rgba(245, 158, 11, 0.22)");
+        highGrad.addColorStop(1, "rgba(245, 158, 11, 0.02)");
+        ctx.fillStyle = highGrad;
+        ctx.beginPath();
+        ctx.moveTo(0, cy - 100);
+        ctx.lineTo(cx + 25, cy - 10);
+        ctx.lineTo(cx - 25, cy - 50);
+        ctx.lineTo(0, cy - 70);
+        ctx.fill();
+      }
+
+      // Backlight Halo
+      if (state.back) {
+        ctx.save();
+        const halo = ctx.createRadialGradient(cx, cy - 70, 10, cx, cy - 40, 110);
+        halo.addColorStop(0, "rgba(56, 189, 248, 0.35)");
+        halo.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - 40, 75, 115, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // 4. Dancer Classical Body
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      // Backlight rim stroke
+      if (state.back) {
+        ctx.strokeStyle = "rgba(56, 189, 248, 0.95)";
+        ctx.lineWidth = 3;
+        drawDancer(ctx);
+        ctx.stroke();
+      }
+
+      // Base body fill
+      ctx.fillStyle = state.foh ? "#755038" : "#1a1d26";
+      drawDancer(ctx);
+      ctx.fill();
+
+      // Front 45 Key Lighting
+      if (state.foh) {
+        const fohGrad = ctx.createLinearGradient(-35, -80, 20, 20);
+        fohGrad.addColorStop(0, "rgba(255, 220, 175, 0.75)");
+        fohGrad.addColorStop(0.6, "rgba(255, 200, 140, 0.2)");
+        fohGrad.addColorStop(1, "rgba(0, 0, 0, 0.65)");
+        ctx.fillStyle = fohGrad;
+        drawDancer(ctx);
+        ctx.fill();
+      }
+
+      // High Side Sculpt (Torso & Head)
+      if (state.highSide) {
+        ctx.strokeStyle = "rgba(245, 158, 11, 0.85)";
+        ctx.lineWidth = 2.5;
+        // High arm highlight
+        ctx.beginPath();
+        ctx.moveTo(-45, -20); ctx.lineTo(-25, -42);
+        ctx.moveTo(25, -42); ctx.lineTo(45, -20);
+        // Neck/Head edge
+        ctx.arc(0, -78, 14, Math.PI * 0.8, Math.PI * 1.2);
+        ctx.stroke();
+      }
+
+      // Mid-Side Sculpt (Waist & Fan Pleat)
+      if (state.midSide) {
+        ctx.strokeStyle = "rgba(245, 158, 11, 0.75)";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(-16, -10); ctx.lineTo(-28, 15);
+        ctx.moveTo(16, -10); ctx.lineTo(28, 15);
+        ctx.stroke();
+      }
+
+      // Shin Buster Sculpt (Knees & Feet / Bells)
+      if (state.shin) {
+        ctx.strokeStyle = "rgba(251, 191, 36, 1.0)";
+        ctx.lineWidth = 3.5;
+        ctx.beginPath();
+        // Feet & Ankle bells highlight
+        ctx.moveTo(-22, 42); ctx.lineTo(-8, 42);
+        ctx.moveTo(8, 42); ctx.lineTo(22, 42);
+        // Outer knee apex
+        ctx.moveTo(-32, 18); ctx.lineTo(-24, 28);
+        ctx.moveTo(32, 18); ctx.lineTo(24, 28);
+        ctx.stroke();
+
+        // Glowing ankle bell dots
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(-14, 38, 2.5, 0, Math.PI * 2);
+        ctx.arc(14, 38, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.restore();
+
+      // Live Rig Status Label
+      ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+      ctx.font = "11px monospace";
+      ctx.fillText("Rig Status: " + (state.shin ? "[SHIN OK] " : "") + (state.highSide ? "[HIGH OK] " : "") + (state.back ? "[RIM OK] " : "") + (state.foh ? "[FOH OK]" : ""), 15, 22);
+
+      updateTags();
+    }
+
+    function drawDancer(c) {
+      c.beginPath();
+      // Head & Bun
+      c.arc(0, -78, 14, 0, Math.PI * 2);
+      c.arc(9, -86, 7, 0, Math.PI * 2);
+      // Neck & Torso
+      c.moveTo(-6, -64);
+      c.lineTo(6, -64);
+      c.lineTo(12, -45);
+      c.lineTo(7, -15);
+      // Arms (Natyarambham)
+      c.lineTo(26, -40);
+      c.lineTo(44, -25);
+      c.lineTo(38, -20);
+      c.lineTo(12, -35);
+      // Araimandi Legs
+      c.lineTo(16, 0);
+      c.lineTo(32, 20); // Knee
+      c.lineTo(18, 42); // Foot
+      c.lineTo(0, 38);
+      c.lineTo(-18, 42);
+      c.lineTo(-32, 20);
+      c.lineTo(-16, 0);
+      // Left Arm
+      c.lineTo(-12, -35);
+      c.lineTo(-38, -20);
+      c.lineTo(-44, -25);
+      c.lineTo(-26, -40);
+      c.closePath();
+    }
+
+    // Toggle Handlers
+    function bindSwitch(id, prop) {
+      const el = document.getElementById(id);
+      el.addEventListener("click", () => {
+        state[prop] = !state[prop];
+        el.classList.toggle("active", state[prop]);
+        render();
+      });
+      el.classList.toggle("active", state[prop]);
+    }
+
+    bindSwitch("swFOH", "foh");
+    bindSwitch("swHigh", "highSide");
+    bindSwitch("swMid", "midSide");
+    bindSwitch("swShin", "shin");
+    bindSwitch("swBack", "back");
+
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stage Lighting Design Studio &bull; Dashboard</title>
+  <link rel="stylesheet" href="./assets/style.css">
+  <style>
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .stat-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0 2.5rem;
+      font-family: var(--font-sans);
+    }
+
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1rem 1.25rem;
+      box-shadow: var(--shadow);
+    }
+
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1.1;
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .phase-block {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+    }
+
+    .phase-title {
+      font-family: var(--font-sans);
+      font-size: 1.15rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.6rem;
+      margin-bottom: 1rem;
+    }
+
+    .phase-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      font-weight: 600;
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      font-family: var(--font-sans);
+    }
+
+    .item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      background: var(--bg-color);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: all 0.15s ease;
+    }
+
+    .item-row:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .item-info {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .item-title {
+      font-weight: 600;
+      font-size: 0.96rem;
+    }
+
+    .item-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .badge-ready {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-next {
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge-planned {
+      background: var(--border-color);
+      color: var(--text-muted);
+    }
+
+    .sidebar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 680px) {
+      .sidebar-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quick-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      font-family: var(--font-sans);
+      box-shadow: var(--shadow);
+    }
+
+    .quick-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.4rem;
+    }
+
+    .quick-card ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-size: 0.88rem;
+    }
+
+    .quick-card li a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      display: block;
+    }
+
+    .quick-card li a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="lesson-tag">Master Dashboard</span>
+      <h1>Stage Lighting Design Studio</h1>
+      <p class="subtitle">Curriculum, interactive lessons, reference sheets, and design records for live dance performance lighting in India.</p>
+    </header>
+
+    <!-- Mission Focus Summary -->
+    <div class="callout">
+      <div class="callout-title">Workspace Mission</div>
+      <p>
+        Design clean, three-dimensional, and emotionally resonant lighting for <strong>live dance performances</strong> (Bharatanatyam, Kathak, Odissi, and contemporary dance) in <strong>Indian auditoriums and sabhas (100–200 seats)</strong>—from first principles to rigging, plotting, and live cueing.
+      </p>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stat-bar">
+      <div class="stat-card">
+        <div class="stat-num" id="statLessons">1 / 9</div>
+        <div class="stat-label">Lessons Active</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">100–200</div>
+        <div class="stat-label">Target Sabha Seats</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Reference Sheets</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1</div>
+        <div class="stat-label">Learning Records</div>
+      </div>
+    </div>
+
+    <!-- Curriculum Roadmap -->
+    <h2>Learning Curriculum & Lessons</h2>
+
+    <div class="dashboard-grid">
+      <!-- Phase 1 -->
+      <div class="phase-block">
+        <div class="phase-title">
+          <span>Phase 1: Core Physics, Perception & Sculpting</span>
+          <span class="phase-tag">In Progress</span>
+        </div>
+        <div class="item-list">
+          <a href="./lessons/0001-the-four-controllable-properties-of-light.html" class="item-row">
+            <div class="item-info">
+              <span class="item-title">Lesson 0001 &bull; The Four Controllable Properties of Light</span>
+              <span class="item-desc">Master Intensity, Color, Distribution, and Movement with an interactive 2D stage canvas simulator.</span>
+            </div>
+            <span class="badge badge-ready">Available Now</span>
+          </a>
+
+          <div class="item-row" style="opacity: 0.85;">
+            <div class="item-info">
+              <span class="item-title">Lesson 0002 &bull; Lighting Angles & Dance Body Geometry</span>
+              <span class="item-desc">The McCandless 45° system vs. dance side booms, shin-busters, and high-side limb definition.</span>
+            </div>
+            <span class="badge badge-next">Up Next</span>
+          </div>
+
+          <div class="item-row" style="opacity: 0.65;">
+            <div class="item-info">
+              <span class="item-title">Lesson 0003 &bull; Color Temperature, Rasa & Silk Costume Reflectance</span>
+              <span class="item-desc">Balancing warm amber (3200K) vs cool white (5600K) with gold temple jewelry and Kanjeevaram silks.</span>
+            </div>
+            <span class="badge badge-planned">Planned</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase-block">
+        <div class="phase-title">
+          <span>Phase 2: Stage Hardware, Rigging & Electrics</span>
+          <span class="phase-tag">Phase 2</span>
+        </div>
+        <div class="item-list">
+          <div class="item-row" style="opacity: 0.65;">
+            <div class="item-info">
+              <span class="item-title">Lesson 0004 &bull; The Fixture Toolkit: PARs, Fresnels & Profile Spots</span>
+              <span class="item-desc">Beam optics, shutter cuts, barn doors, and when to use soft washes vs. razor-sharp specials.</span>
+            </div>
+            <span class="badge badge-planned">Planned</span>
+          </div>
+
+          <div class="item-row" style="opacity: 0.65;">
+            <div class="item-info">
+              <span class="item-title">Lesson 0005 &bull; Rigging in the Wings: Side Booms, Pipes & Safety</span>
+              <span class="item-desc">Placing vertical boom pipes in limited wings, C-clamps, safety bonds, and cable runs.</span>
+            </div>
+            <span class="badge badge-planned">Planned</span>
+          </div>
+
+          <div class="item-row" style="opacity: 0.65;">
+            <div class="item-info">
+              <span class="item-title">Lesson 0006 &bull; DMX512 Control & Power Distribution</span>
+              <span class="item-desc">Addressing fixtures, universe patching, 3-pin vs 5-pin DMX, and electrical load limits in small venues.</span>
+            </div>
+            <span class="badge badge-planned">Planned</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-block">
+        <div class="phase-title">
+          <span>Phase 3: Production Drafting, Music Sync & Live Cueing</span>
+          <span class="phase-tag">Phase 3</span>
+        </div>
+        <div class="item-list">
+          <div class="item-row" style="opacity: 0.65;">
+            <div class="item-info">
+              <span class="item-title">Lesson 0007 &bull; Drafting a Stage Lighting Plot & Patch Sheet</span>
+              <span class="item-desc">Standard USITT symbols, hang positions, channel assignments, and tech sheets for venue crews.</span>
+            </div>
+            <span class="badge badge-planned">Planned</span>
+          </div>
+
+          <div class="item-row" style="opacity: 0.65;">
+            <div class="item-info">
+              <span class="item-title">Lesson 0008 &bull; Choreography Analysis, Tala & Cue Sheet Construction</span>
+              <span class="item-desc">Mapping cues to musical rhythm (Tala beats), emotional transitions, and choreography milestones.</span>
+            </div>
+            <span class="badge badge-planned">Planned</span>
+          </div>
+
+          <div class="item-row" style="opacity: 0.65;">
+            <div class="item-info">
+              <span class="item-title">Lesson 0009 &bull; Operating the Console: Rehearsals & Running the Live Show</span>
+              <span class="item-desc">Submasters, crossfades, manual busking, and managing live contingencies without disrupting the dancer.</span>
+            </div>
+            <span class="badge badge-planned">Planned</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Navigation: Reference, Records & Resources -->
+    <div class="sidebar-grid">
+      <!-- Reference Materials -->
+      <div class="quick-card">
+        <h3>📑 Reference Documents</h3>
+        <ul>
+          <li><a href="./reference/glossary-and-properties.html">&rarr; Ref 01: Core Properties & Stage Angles Cheat Sheet</a></li>
+          <li style="color: var(--text-muted); font-size: 0.82rem;">&bull; Ref 02: Typical Sabha Lighting Rig Specification (Upcoming)</li>
+          <li style="color: var(--text-muted); font-size: 0.82rem;">&bull; Ref 03: DMX512 Channel Patch Template (Upcoming)</li>
+        </ul>
+      </div>
+
+      <!-- Learning Records -->
+      <div class="quick-card">
+        <h3>✅ Learning Records (ADRs)</h3>
+        <ul>
+          <li><a href="./learning-records/0001-baseline-and-stage-dance-mission.html">&rarr; LR-0001: Baseline & Live Dance Mission</a></li>
+        </ul>
+      </div>
+
+      <!-- Workspace Blueprints -->
+      <div class="quick-card">
+        <h3>🎯 Workspace Blueprints</h3>
+        <ul>
+          <li><a href="./mission.html">&rarr; Mission (Goals, Success & Scope)</a></li>
+          <li><a href="./notes.html">&rarr; Notes (Working Context & Sabhā Focus)</a></li>
+        </ul>
+      </div>
+
+      <!-- Curated Resources -->
+      <div class="quick-card">
+        <h3>📚 Knowledge & Wisdom</h3>
+        <ul>
+          <li><a href="./resources.html">&rarr; Curated Resources Library</a></li>
+          <li><a href="https://archive.org/details/methodoflighting00mcca" target="_blank" rel="noopener">&rarr; Stanley McCandless: A Method of Lighting the Stage</a></li>
+          <li><a href="https://www.controlbooth.com" target="_blank" rel="noopener">&rarr; ControlBooth Theatre Tech Forum</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <footer class="lesson-footer" style="margin-top: 3rem;">
+      <span>Stage Lighting Learning Hub &bull; Local Workspace</span>
+      <span>Prompt Antigravity anytime to generate the next lesson.</span>
+    </footer>
+  </div>
+</body>
+</html>

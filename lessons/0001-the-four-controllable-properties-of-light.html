@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 01: The Four Controllable Properties of Light</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .sim-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    #stageCanvas {
+      width: 100%;
+      height: 320px;
+      background-color: #08090c;
+      border-radius: 6px;
+      border: 1px solid #1f232d;
+    }
+    .slider-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-bottom: 0.6rem;
+    }
+    .slider-row span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      min-width: 45px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="lesson-tag">Lesson 0001 &bull; Foundations</span>
+      <h1>The Four Controllable Properties of Light</h1>
+      <p class="subtitle">How master lighting designers transform flat stage illumination into three-dimensional living sculpture.</p>
+    </header>
+
+    <section>
+      <h2>The Stage Lighting Problem</h2>
+      <p>
+        Imagine walking into a school auditorium or local cultural <em>sabha</em> in Chennai, Bangalore, or Mumbai for a Bharatanatyam or Kathak recital. You look up and see fluorescent tubes or massive stadium-style white floodlights blasted straight at the stage.
+      </p>
+      <p>
+        What happens to the dancer? 
+        The audience can technically "see" them, but the dancer appears <strong>flat like a cardboard cutout</strong>. The delicate curves of their facial expressions (<em>Abhinaya</em>) are washed out, hand gestures (<em>Mudras</em>) disappear against their body, and the intricate gold metallic zari of their Kanjeevaram silk saree creates blinding, distracting hot-spots.
+      </p>
+      <p>
+        To prevent this, every lighting design—from an intimate 100-seat sabha to a world-class opera—is built on four fundamental physical properties established by stage lighting pioneer Stanley McCandless.
+      </p>
+
+      <div class="callout">
+        <div class="callout-title">The Fundamental Rule of Dance Lighting</div>
+        <p>Lighting a dancer is not about making them bright; it is about <strong>sculpting the body with highlights and shadows</strong> while preserving micro-expressions and rhythm.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Four Levers of Light</h2>
+      <p>Whenever you sit at a lighting desk or focus a fixture on a ladder, you only ever control four physical properties:</p>
+
+      <h3>1. Intensity (How Much Light)</h3>
+      <p>
+        Intensity refers to the relative brightness of a light source, controlled today via dimmers or DMX percentages (0% to 100%). It sets visual contrast: the human eye instinctively tracks the brightest point on stage. For Indian dance, high intensity on gold jewelry blinds the camera and audience, while low intensity hides the dancer's expressive eyes.
+      </p>
+
+      <h3>2. Color (The Spectral Quality)</h3>
+      <p>
+        Light color ranges from warm amber (around 3000K, typical of incandescent lamps and traditional temple oil lamps) to daylight cool (5600K+). Color creates time of day and evokes emotion (the <em>Rasa</em> of the piece). Warm tones enhance Indian skin tones and rich red/mustard silks, while cold blues recede into the background.
+      </p>
+
+      <h3>3. Distribution (Angle, Direction & Quality)</h3>
+      <p>
+        Distribution is where the light comes from and how hard or soft its edges are. <strong>This is the secret weapon of dance lighting.</strong>
+      </p>
+      <ul>
+        <li><strong>Front Light:</strong> Provides visibility for the face, but if it is straight-on, it kills shadows and flattens the subject.</li>
+        <li><strong>Side Light (Booms / Shin-Busters):</strong> Light coming horizontally from the wings. It hits the sides of the torso, arms, and legs, carving them out in 3D relief against the dark stage.</li>
+        <li><strong>Backlight (Rim Light):</strong> Light coming from behind and above. It outlines the dancer’s hair and shoulders with a luminous halo, instantly popping them off the dark backdrop.</li>
+      </ul>
+
+      <h3>4. Movement (Changes Across Time)</h3>
+      <p>
+        Movement does not just mean moving-head fixtures swinging around. A gradual 5-second crossfade from a warm morning amber to a cool evening blue as the singer shifts ragas is movement. Lighting rhythm must breathe with the dancer's <em>Tala</em> (beat).
+      </p>
+    </section>
+
+    <!-- Interactive Simulator -->
+    <section class="simulator-card">
+      <div class="simulator-title">Interactive Lab: Sculpting the Performer</div>
+      <div class="simulator-subtitle">Toggle angles and adjust color temperature to observe how shadows, depth, and silhouette change in real-time.</div>
+
+      <div class="sim-display">
+        <canvas id="stageCanvas" width="700" height="320"></canvas>
+      </div>
+
+      <div class="control-grid">
+        <div class="control-item">
+          <label>Front Key Light</label>
+          <div class="button-group">
+            <button class="btn active" id="btnFront45">45° Diagonal</button>
+            <button class="btn" id="btnFrontFlat">Flat Front</button>
+            <button class="btn" id="btnFrontOff">Off</button>
+          </div>
+        </div>
+
+        <div class="control-item">
+          <label>Side Booms (Sculpt)</label>
+          <div class="button-group">
+            <button class="btn active" id="btnSideOn">On</button>
+            <button class="btn" id="btnSideOff">Off</button>
+          </div>
+        </div>
+
+        <div class="control-item">
+          <label>Back Rim Light</label>
+          <div class="button-group">
+            <button class="btn active" id="btnBackOn">On</button>
+            <button class="btn" id="btnBackOff">Off</button>
+          </div>
+        </div>
+
+        <div class="control-item">
+          <label>Color Palette</label>
+          <div class="button-group">
+            <button class="btn active" id="btnColorWarm">Warm (3200K)</button>
+            <button class="btn" id="btnColorCool">Cool (5600K)</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.25rem;">
+        <div class="slider-row">
+          <label style="font-family: var(--font-sans); font-size: 0.88rem; font-weight: 600;">Master Intensity</label>
+          <input type="range" id="masterIntensity" min="10" max="100" value="85" style="flex: 1;">
+          <span id="intensityVal">85%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Retrieval Practice Quiz -->
+    <section class="quiz-section">
+      <div class="quiz-header">Check Your Knowledge: Storage Retrieval</div>
+      <div class="quiz-instruction">Answer each question to solidify your mental model. Immediate feedback will appear upon selection.</div>
+      <div id="quizContainer"></div>
+    </section>
+
+    <!-- Primary Source Card -->
+    <section class="primary-source-card">
+      <div class="primary-source-title">Recommended Primary Source Reading</div>
+      <p>
+        Read Chapter II ("The Controllable Properties of Light") in Stanley McCandless's 
+        <a href="https://archive.org/details/methodoflighting00mcca" target="_blank" rel="noopener">A Method of Lighting the Stage</a> (free borrow on Internet Archive). Notice how his breakdown from 1932 still dictates every digital lighting console designed today.
+      </p>
+    </section>
+
+    <div class="callout tip">
+      <div class="callout-title">Have a Question or Doubts?</div>
+      <p>Your agent is your personal lighting tutor. Ask questions directly in your terminal/chat anytime: whether about color temperatures, why specific angles create shadows, or how local sabha stages are wired.</p>
+    </div>
+
+    <footer class="lesson-footer">
+      <span><a href="../index.html">&larr; Dashboard</a> &bull; <a href="../reference/glossary-and-properties.html">Reference Cheat Sheet</a></span>
+      <span>Next: Lesson 02 &bull; Lighting Angles & Body Geometry &rarr;</span>
+    </footer>
+  </div>
+
+  <script src="../assets/quiz.js"></script>
+  <script>
+    // --- Quiz Setup ---
+    // Rule: Every answer choice in a question must have the exact same number of words!
+    const quizData = [
+      {
+        question: "Why is flat, straight-on front lighting considered problematic for dance performances?",
+        options: [
+          "It eliminates natural facial depth and muscular contours.",
+          "It causes electrical dimmers to overheat very rapidly.",
+          "It forces stage lamps to consume excessive power.",
+          "It makes performers forget complex choreographic stage cues."
+        ],
+        correct: 0,
+        explanation: "Straight-on front lighting casts shadows directly behind the subject from the audience's perspective, washing out facial contours (Abhinaya) and muscle definition."
+      },
+      {
+        question: "Which lighting angle primarily sculpts a dancer's limbs and footwork across the stage?",
+        options: [
+          "Overhead downlights hanging from high grid pipes.",
+          "Horizontal side lights positioned in stage wings.",
+          "Direct center footlights placed along stage edges.",
+          "Diffused front floodlights mounted above house seating."
+        ],
+        correct: 1,
+        explanation: "Side light (especially side booms and low shin-busters) cuts across the body, revealing limb extension, posture (Araimandi), and foot stamps."
+      },
+      {
+        question: "In Indian classical dance, why must intensity be monitored around traditional silk costumes?",
+        options: [
+          "Excessive heat quickly melts fabric border embroidery.",
+          "Intense beams ruin delicate natural dye patterns.",
+          "Intense glare bounces off metallic zari threads.",
+          "Stage brightness triggers electrical circuit breaker failure."
+        ],
+        correct: 2,
+        explanation: "Kanjeevaram silks and temple jewelry contain high specular reflectivity. Overly intense fixtures create severe glare and blind cameras or audience members."
+      }
+    ];
+
+    initQuiz("quizContainer", quizData);
+
+    // --- Interactive Stage Simulator Canvas ---
+    const canvas = document.getElementById("stageCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let state = {
+      frontAngle: "45", // "45", "flat", "off"
+      sideLight: true,
+      backLight: true,
+      colorTemp: "warm", // "warm", "cool"
+      intensity: 0.85
+    };
+
+    function renderStage() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      // Stage backdrop & floor
+      const gradBack = ctx.createLinearGradient(0, 0, 0, h);
+      gradBack.addColorStop(0, "#050608");
+      gradBack.addColorStop(0.7, "#0c0e14");
+      gradBack.addColorStop(0.7, "#141720");
+      gradBack.addColorStop(1, "#07080a");
+      ctx.fillStyle = gradBack;
+      ctx.fillRect(0, 0, w, h);
+
+      // Horizon line
+      ctx.strokeStyle = "#232733";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.7);
+      ctx.lineTo(w, h * 0.7);
+      ctx.stroke();
+
+      const cx = w / 2;
+      const cy = h * 0.65;
+      const scale = 1.0;
+
+      // Color base
+      const isWarm = state.colorTemp === "warm";
+      const keyColor = isWarm ? "rgba(255, 214, 160," : "rgba(200, 225, 255,";
+      const rimColor = isWarm ? "rgba(255, 235, 190," : "rgba(170, 210, 255,";
+      const intensity = state.intensity;
+
+      // 1. Backlight Beam & Halo
+      if (state.backLight) {
+        ctx.save();
+        const backBeam = ctx.createRadialGradient(cx, cy - 80, 10, cx, cy - 40, 140);
+        backBeam.addColorStop(0, `${rimColor} ${0.35 * intensity})`);
+        backBeam.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = backBeam;
+        ctx.beginPath();
+        ctx.ellipse(cx, cy - 40, 90, 130, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // 2. Floor Pool of Light
+      ctx.save();
+      const floorGrad = ctx.createRadialGradient(cx, cy + 40, 5, cx, cy + 40, 120);
+      let floorAlpha = (state.frontAngle !== "off" ? 0.35 : 0.08) * intensity;
+      floorGrad.addColorStop(0, `${keyColor} ${floorAlpha})`);
+      floorGrad.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = floorGrad;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy + 40, 120, 32, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // 3. Dancer Silhouette & Form
+      // Body Base (Classical Dance Araimandi / Stance Silhouette)
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      // Backlight Rim Stroke on Body
+      if (state.backLight) {
+        ctx.strokeStyle = `${rimColor} ${0.85 * intensity})`;
+        ctx.lineWidth = 3.5;
+        drawDancerPath(ctx);
+        ctx.stroke();
+      }
+
+      // Base skin/fabric fill
+      let bodyFill = "#181a20";
+      if (state.frontAngle === "flat") {
+        bodyFill = isWarm ? `rgba(180, 120, 80, ${intensity})` : `rgba(120, 140, 170, ${intensity})`;
+      } else if (state.frontAngle === "45") {
+        bodyFill = isWarm ? `rgba(130, 80, 50, ${intensity})` : `rgba(80, 95, 125, ${intensity})`;
+      }
+      ctx.fillStyle = bodyFill;
+      drawDancerPath(ctx);
+      ctx.fill();
+
+      // 4. Dimensional Modeling (Shadows & Highlights)
+      if (state.frontAngle === "45") {
+        // Diagonal highlight on dancer's right side (camera left)
+        const highGrad = ctx.createLinearGradient(-45, -80, 40, 20);
+        highGrad.addColorStop(0, `${keyColor} ${0.65 * intensity})`);
+        highGrad.addColorStop(0.5, `${keyColor} ${0.15 * intensity})`);
+        highGrad.addColorStop(1, "rgba(0,0,0,0.7)");
+        ctx.fillStyle = highGrad;
+        drawDancerPath(ctx);
+        ctx.fill();
+      } else if (state.frontAngle === "flat") {
+        // Flat, uniform wash (destroys contour shadows)
+        const flatGrad = ctx.createLinearGradient(0, -90, 0, 40);
+        flatGrad.addColorStop(0, `${keyColor} ${0.5 * intensity})`);
+        flatGrad.addColorStop(1, `${keyColor} ${0.2 * intensity})`);
+        ctx.fillStyle = flatGrad;
+        drawDancerPath(ctx);
+        ctx.fill();
+      }
+
+      // 5. Side Light (Crisp edge sculpt on limbs)
+      if (state.sideLight) {
+        ctx.save();
+        ctx.lineWidth = 2.5;
+        // Left side boom edge
+        ctx.strokeStyle = `${keyColor} ${0.75 * intensity})`;
+        ctx.beginPath();
+        ctx.arc(-14, -75, 16, Math.PI * 0.7, Math.PI * 1.3); // Head edge
+        ctx.moveTo(-28, -45); ctx.lineTo(-45, -20); // Arm
+        ctx.moveTo(-24, 0); ctx.lineTo(-32, 38);   // Knee/leg
+        ctx.stroke();
+
+        // Right side boom edge
+        ctx.beginPath();
+        ctx.arc(14, -75, 16, -Math.PI * 0.3, Math.PI * 0.3);
+        ctx.moveTo(28, -45); ctx.lineTo(45, -20);
+        ctx.moveTo(24, 0); ctx.lineTo(32, 38);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      ctx.restore();
+
+      // 6. Annotation overlay on canvas
+      ctx.fillStyle = "rgba(255, 255, 255, 0.65)";
+      ctx.font = "12px sans-serif";
+      let summaryText = `Front: ${state.frontAngle.toUpperCase()} | Side: ${state.sideLight ? "ON" : "OFF"} | Back: ${state.backLight ? "ON" : "OFF"} | Temp: ${state.colorTemp.toUpperCase()}`;
+      ctx.fillText(summaryText, 16, 26);
+    }
+
+    function drawDancerPath(c) {
+      c.beginPath();
+      // Head / Crown (Kondai / Hair bun)
+      c.arc(0, -78, 14, 0, Math.PI * 2);
+      c.arc(10, -85, 7, 0, Math.PI * 2); // Bun
+
+      // Neck & Torso
+      c.moveTo(-6, -64);
+      c.lineTo(6, -64);
+      c.lineTo(12, -45); // Chest
+      c.lineTo(7, -15);  // Waist
+
+      // Arms in Natyarambham (classical curved posture)
+      // Left arm
+      c.lineTo(26, -40);
+      c.lineTo(44, -25);
+      c.lineTo(38, -20);
+      c.lineTo(12, -35);
+
+      // Lower body in Araimandi (demi-plié bent knees)
+      c.lineTo(16, 0);
+      c.lineTo(32, 20); // Outward knee
+      c.lineTo(18, 42); // Ankle / foot
+      c.lineTo(0, 38);  // Fan pleat bottom
+      c.lineTo(-18, 42);
+      c.lineTo(-32, 20); // Left knee
+      c.lineTo(-16, 0);
+
+      // Left arm return
+      c.lineTo(-12, -35);
+      c.lineTo(-38, -20);
+      c.lineTo(-44, -25);
+      c.lineTo(-26, -40);
+      c.closePath();
+    }
+
+    // Controls listeners
+    const btnFront45 = document.getElementById("btnFront45");
+    const btnFrontFlat = document.getElementById("btnFrontFlat");
+    const btnFrontOff = document.getElementById("btnFrontOff");
+
+    function setFront(mode) {
+      state.frontAngle = mode;
+      btnFront45.classList.toggle("active", mode === "45");
+      btnFrontFlat.classList.toggle("active", mode === "flat");
+      btnFrontOff.classList.toggle("active", mode === "off");
+      renderStage();
+    }
+    btnFront45.addEventListener("click", () => setFront("45"));
+    btnFrontFlat.addEventListener("click", () => setFront("flat"));
+    btnFrontOff.addEventListener("click", () => setFront("off"));
+
+    const btnSideOn = document.getElementById("btnSideOn");
+    const btnSideOff = document.getElementById("btnSideOff");
+    btnSideOn.addEventListener("click", () => {
+      state.sideLight = true;
+      btnSideOn.classList.add("active");
+      btnSideOff.classList.remove("active");
+      renderStage();
+    });
+    btnSideOff.addEventListener("click", () => {
+      state.sideLight = false;
+      btnSideOff.classList.add("active");
+      btnSideOn.classList.remove("active");
+      renderStage();
+    });
+
+    const btnBackOn = document.getElementById("btnBackOn");
+    const btnBackOff = document.getElementById("btnBackOff");
+    btnBackOn.addEventListener("click", () => {
+      state.backLight = true;
+      btnBackOn.classList.add("active");
+      btnBackOff.classList.remove("active");
+      renderStage();
+    });
+    btnBackOff.addEventListener("click", () => {
+      state.backLight = false;
+      btnBackOff.classList.add("active");
+      btnBackOn.classList.remove("active");
+      renderStage();
+    });
+
+    const btnColorWarm = document.getElementById("btnColorWarm");
+    const btnColorCool = document.getElementById("btnColorCool");
+    btnColorWarm.addEventListener("click", () => {
+      state.colorTemp = "warm";
+      btnColorWarm.classList.add("active");
+      btnColorCool.classList.remove("active");
+      renderStage();
+    });
+    btnColorCool.addEventListener("click", () => {
+      state.colorTemp = "cool";
+      btnColorCool.classList.add("active");
+      btnColorWarm.classList.remove("active");
+      renderStage();
+    });
+
+    const masterSlider = document.getElementById("masterIntensity");
+    const intensityVal = document.getElementById("intensityVal");
+    masterSlider.addEventListener("input", (e) => {
+      state.intensity = parseInt(e.target.value, 10) / 100;
+      intensityVal.textContent = `${e.target.value}%`;
+      renderStage();
+    });
+
+    // Initial render
+    renderStage();
+  </script>
+</body>
+</html>

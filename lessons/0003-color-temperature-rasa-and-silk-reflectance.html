@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lesson 03: Color Temperature, Rasa & Silk Costume Reflectance</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .sim-display {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    #colorCanvas {
+      width: 100%;
+      height: 340px;
+      background-color: #08090d;
+      border-radius: 6px;
+      border: 1px solid var(--border-console);
+    }
+    .rasa-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.65rem;
+      margin: 1.25rem 0;
+    }
+    .rasa-card {
+      background: #141722;
+      border: 1px solid var(--border-console);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.9rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .rasa-card:hover {
+      border-color: #3b4359;
+    }
+    .rasa-card.active {
+      border-color: var(--tungsten);
+      background: #1e2230;
+      box-shadow: 0 0 10px var(--tungsten-glow);
+    }
+    .rasa-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .rasa-desc {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+    .kelvin-readout {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--tungsten-bright);
+      font-weight: 700;
+    }
+    .fabric-meter {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
+      background: #10121a;
+      border: 1px solid var(--border-console);
+      border-radius: var(--radius-sm);
+      margin-top: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="lesson-tag">Lesson 0003 &bull; Color & Emotion</span>
+      <h1>Color Temperature, Rasa & Silk Costume Reflectance</h1>
+      <p class="subtitle">How to master the Kelvin scale, evoke the emotional grammar of the Navarasas, and manage metallic zari glare.</p>
+    </header>
+
+    <section>
+      <h2>Color as Emotional Grammar (*Rasa*)</h2>
+      <p>
+        In Indian classical dance, color is not merely decorative eye candy. Rooted in the <em>Natya Shastra</em>, every performance is designed to evoke a specific emotional flavor (<em>Rasa</em>) and psychological state (<em>Bhava</em>) in the audience.
+      </p>
+      <p>
+        When a dancer shifts from a romantic <em>Padam</em> (evoking <em>Shringara</em> / Love) to a dramatic <em>Varnam</em> depicting the slaying of a demon (evoking <em>Roudra</em> / Fury and <em>Veera</em> / Valor), the lighting must shift in emotional temperature to anchor that narrative reality.
+      </p>
+
+      <div class="callout">
+        <div class="callout-title">The Sacred 3200K Baseline</div>
+        <p>In classical Indian dance, the golden baseline is <strong>3000K–3200K warm tungsten white</strong>. It replicates traditional temple oil lamps (*diyas*), flatters Indian skin tones, and warms red, mustard, and peacock-green silk dyes without making the dancer look washed out or clinical.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>The Metallic Saree Problem: Specular vs. Diffuse</h2>
+      <p>
+        A Bharatanatyam or Kathak dancer steps on stage wearing a pure Kanjeevaram silk costume with real <strong>gold and silver metallic threads (<em>zari</em>)</strong>, accompanied by polished brass temple jewelry studded with kemp stones.
+      </p>
+      <p>
+        This introduces a severe physical challenge:
+      </p>
+      <ul>
+        <li><strong>Diffuse Reflection (The Goal):</strong> Light penetrates the silk threads and scatters evenly, making the deep maroon or royal blue fabric glow with rich, saturated vibrancy.</li>
+        <li><strong>Specular Reflection (The Danger):</strong> Bare, un-diffused point-source LED lights act like mirrors off the metallic zari and polished jewelry. The beam bounces directly into the audience's eyes or camera sensors as a <strong>blinding, blown-out white glare</strong>, completely overpowering the dancer's subtle eye expressions (<em>Abhinaya</em>).</li>
+      </ul>
+      <p>
+        <strong>The Lighting Designer's Remedy:</strong> Never hit a silk costume with raw, hard point-sources from the front. Introduce <strong>diffusion filters (frost gels)</strong> to soften the beam edge, and rely on warm side-lighting so metallic borders catch warm highlights without turning into blinding white flares.
+      </p>
+    </section>
+
+    <!-- Interactive Simulator -->
+    <section class="simulator-card">
+      <div class="simulator-title">Interactive Lab: The Rasa & Zari Reflectance Lab</div>
+      <div class="simulator-subtitle">Select a classical emotional Rasa below, adjust the Kelvin slider, and toggle diffusion to observe how silk fabrics, metallic zari, and facial warmth respond live.</div>
+
+      <div class="sim-display">
+        <canvas id="colorCanvas" width="720" height="340"></canvas>
+      </div>
+
+      <!-- Rasa Mood Selectors -->
+      <div class="rasa-grid">
+        <div class="rasa-card active" id="rasaBhakti">
+          <span class="rasa-name">Bhakti / Shringara</span>
+          <span class="rasa-desc">Devotion & Love &bull; 3000K</span>
+        </div>
+        <div class="rasa-card" id="rasaVeera">
+          <span class="rasa-name">Veera / Heroic</span>
+          <span class="rasa-desc">Valor & Radiance &bull; 3800K</span>
+        </div>
+        <div class="rasa-card" id="rasaRoudra">
+          <span class="rasa-name">Roudra / Fury</span>
+          <span class="rasa-desc">Anger & Drama &bull; Ruby Red</span>
+        </div>
+        <div class="rasa-card" id="rasaAdbhuta">
+          <span class="rasa-name">Adbhuta / Tandavam</span>
+          <span class="rasa-desc">Wonder & Cosmic &bull; Steel Blue</span>
+        </div>
+        <div class="rasa-card" id="rasaShanta">
+          <span class="rasa-name">Shanta / Peace</span>
+          <span class="rasa-desc">Harmony & Pure &bull; 4000K</span>
+        </div>
+      </div>
+
+      <!-- Kelvin Slider & Diffusion Toggle -->
+      <div style="margin-top: 1.25rem;">
+        <div class="slider-row">
+          <label style="font-family: var(--font-sans); font-size: 0.88rem; font-weight: 600;">Key Color Temperature</label>
+          <input type="range" id="kelvinSlider" min="2400" max="6500" value="3000" step="100" style="flex: 1;">
+          <span class="kelvin-readout" id="kelvinVal">3000K</span>
+        </div>
+      </div>
+
+      <div class="fabric-meter">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <span style="color: var(--text-muted);">Optical Diffusion (Frost Filter):</span>
+          <div class="button-group">
+            <button class="btn active" id="btnDiffSoft">Diffused (Soft Glow)</button>
+            <button class="btn" id="btnDiffBare">Bare Point-Source (Harsh Glare)</button>
+          </div>
+        </div>
+        <span id="glareStatus" style="color: #6ee7b7; font-weight: 600;">✔ Zari Luminous</span>
+      </div>
+    </section>
+
+    <!-- Retrieval Quiz -->
+    <section class="quiz-section">
+      <div class="quiz-header">Check Your Knowledge: Storage Retrieval</div>
+      <div class="quiz-instruction">Test your understanding of color temperature, emotional Rasas, and silk fabric physics. Immediate feedback is provided.</div>
+      <div id="quizContainer"></div>
+    </section>
+
+    <!-- Primary Source Card -->
+    <section class="primary-source-card">
+      <div class="primary-source-title">Recommended Primary Source Reading</div>
+      <p>
+        Read Chapter 8 ("Color Theory and Light") in Richard Dunham's 
+        <a href="https://www.routledge.com/Stage-Lighting-The-Fundamentals/Dunham/p/book/9780367468163" target="_blank" rel="noopener">Stage Lighting: The Fundamentals</a>, paired with Chapter VI of Bharata Muni's <em>Natya Shastra</em> on color symbolism in classical Indian performing arts.
+      </p>
+    </section>
+
+    <div class="callout tip">
+      <div class="callout-title">Have a Question About Saree Dyes?</div>
+      <p>Curious why certain synthetic dance sarees react differently under modern LED lights compared to natural pure silk? Ask your mentor directly in the chat!</p>
+    </div>
+
+    <footer class="lesson-footer">
+      <span><a href="../index.html">&larr; Dashboard</a> &bull; <a href="../reference/rasa-and-color-palettes.html">Ref Sheet 03: Navarasa Palettes</a></span>
+      <span>Next: Lesson 04 &bull; The Fixture Toolkit (PARs, Fresnels & Profile Spots) &rarr;</span>
+    </footer>
+  </div>
+
+  <script src="../assets/quiz.js"></script>
+  <script>
+    // --- Quiz Data (Strict Word Count Enforced) ---
+    const quizData = [
+      {
+        question: "Why does direct cool daylight light cause problems on traditional gold zari sarees?",
+        options: [
+          "It creates blinding specular glares off metallic threads.",
+          "It causes heavy silk fabric seams to unravel.",
+          "It forces stage dimmers to trigger electrical overloads.",
+          "It makes dancers forget complex melodic rhythmic patterns."
+        ],
+        correct: 0,
+        explanation: "Bare cool daylight produces intense specular reflections off metallic gold/silver zari threads, causing blinding white glare that overpowers the dancer's facial expressions."
+      },
+      {
+        question: "In the Natya Shastra tradition, which lighting temperature best complements devotional Bhakti themes?",
+        options: [
+          "Stark blue daylight with harsh white spots.",
+          "Warm golden amber resembling glowing temple lamps.",
+          "Saturated emerald green with deep violet shadows.",
+          "Flashing strobe bursts with rapid color shifts."
+        ],
+        correct: 1,
+        explanation: "Warm golden amber (2800K–3200K) mirrors the sacred ambiance of sanctum oil lamps (diyas), warming natural skin tones and rich devotional silks."
+      },
+      {
+        question: "How should a designer soften intense reflections from polished brass temple jewelry?",
+        options: [
+          "Increase front fixture wattage to maximum level.",
+          "Spray chemical lacquer over antique costume ornaments.",
+          "Introduce diffusion filters and warm directional side-light.",
+          "Turn off stage ventilation fans during performance."
+        ],
+        correct: 2,
+        explanation: "Diffusion filters (frost gels) scatter direct light rays, converting harsh specular pinpoints into a soft, luminous glow that preserves jewelry details without blinding audience eyes."
+      }
+    ];
+
+    initQuiz("quizContainer", quizData);
+
+    // --- Interactive Color & Rasa Canvas Simulator ---
+    const canvas = document.getElementById("colorCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let currentRasa = "bhakti";
+    let kelvin = 3000;
+    let isDiffused = true;
+
+    const rasaConfigs = {
+      bhakti: { kelvin: 3000, cyc: "#1a1309", rim: "rgba(251, 191, 36, 0.7)", fabricBase: [170, 40, 50], name: "Bhakti / Devotion" },
+      veera: { kelvin: 3800, cyc: "#1e1708", rim: "rgba(245, 158, 11, 0.8)", fabricBase: [190, 130, 20], name: "Veera / Valor" },
+      roudra: { kelvin: 2800, cyc: "#33080c", rim: "rgba(225, 29, 72, 0.9)", fabricBase: [150, 15, 25], name: "Roudra / Fury" },
+      adbhuta: { kelvin: 5000, cyc: "#09172c", rim: "rgba(56, 189, 248, 0.95)", fabricBase: [30, 70, 140], name: "Adbhuta / Tandavam" },
+      shanta: { kelvin: 4000, cyc: "#101622", rim: "rgba(226, 232, 240, 0.7)", fabricBase: [210, 200, 180], name: "Shanta / Peace" }
+    };
+
+    function kelvinToRGB(k) {
+      let temp = k / 100;
+      let r, g, b;
+
+      if (temp <= 66) {
+        r = 255;
+        g = 99.4708025861 * Math.log(temp) - 161.1195681661;
+        b = temp <= 19 ? 0 : 138.5177312231 * Math.log(temp - 10) - 305.0447927307;
+      } else {
+        r = 329.698727446 * Math.pow(temp - 60, -0.1332047592);
+        g = 288.1221695283 * Math.pow(temp - 60, -0.0755148492);
+        b = 255;
+      }
+      return [
+        Math.min(255, Math.max(0, Math.round(r))),
+        Math.min(255, Math.max(0, Math.round(g))),
+        Math.min(255, Math.max(0, Math.round(b)))
+      ];
+    }
+
+    function render() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const cfg = rasaConfigs[currentRasa];
+      const rgb = kelvinToRGB(kelvin);
+      const lightRGB = `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+
+      // 1. Stage Backdrop with Rasa wash
+      const bg = ctx.createLinearGradient(0, 0, 0, h);
+      bg.addColorStop(0, cfg.cyc);
+      bg.addColorStop(0.68, "#0d0f17");
+      bg.addColorStop(0.68, "#141724");
+      bg.addColorStop(1, "#07080d");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, w, h);
+
+      // Floor line
+      ctx.strokeStyle = "#252b3d";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, h * 0.68);
+      ctx.lineTo(w, h * 0.68);
+      ctx.stroke();
+
+      const cx = w / 2;
+      const cy = h * 0.64;
+
+      // 2. Backlight Halo
+      ctx.save();
+      const halo = ctx.createRadialGradient(cx, cy - 70, 10, cx, cy - 40, 120);
+      halo.addColorStop(0, cfg.rim);
+      halo.addColorStop(1, "rgba(0, 0, 0, 0)");
+      ctx.fillStyle = halo;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy - 40, 80, 120, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // 3. Dancer Base Silhouette
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      // Rim light stroke
+      ctx.strokeStyle = cfg.rim;
+      ctx.lineWidth = 3;
+      drawClassicalDancer(ctx);
+      ctx.stroke();
+
+      // Saree Fabric Tone modulated by Kelvin
+      const fb = cfg.fabricBase;
+      const krFactor = rgb[0] / 255;
+      const kgFactor = rgb[1] / 255;
+      const kbFactor = rgb[2] / 255;
+      const finalR = Math.round(fb[0] * krFactor * 0.9);
+      const finalG = Math.round(fb[1] * kgFactor * 0.9);
+      const finalB = Math.round(fb[2] * kbFactor * 0.9);
+
+      ctx.fillStyle = `rgb(${finalR}, ${finalG}, ${finalB})`;
+      drawClassicalDancer(ctx);
+      ctx.fill();
+
+      // Soft Warm Front Fill
+      const frontGrad = ctx.createLinearGradient(-35, -80, 25, 25);
+      frontGrad.addColorStop(0, `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.55)`);
+      frontGrad.addColorStop(1, "rgba(0, 0, 0, 0.7)");
+      ctx.fillStyle = frontGrad;
+      drawClassicalDancer(ctx);
+      ctx.fill();
+
+      // 4. Metallic Zari Border & Jewelry Simulation
+      // Saree fan pleat & border zari path
+      ctx.lineWidth = 3;
+      if (isDiffused) {
+        // Soft, rich golden glow
+        ctx.strokeStyle = `rgba(251, 191, 36, 0.85)`;
+        drawZariBorders(ctx);
+        ctx.stroke();
+
+        // Jewelry warm shimmer
+        ctx.fillStyle = "rgba(251, 191, 36, 0.9)";
+        ctx.beginPath();
+        ctx.arc(0, -68, 3, 0, Math.PI * 2); // Temple necklace
+        ctx.arc(0, -58, 4, 0, Math.PI * 2); // Long mala
+        ctx.fill();
+      } else {
+        // Bare point source -> Severe Specular Glare Flare
+        ctx.strokeStyle = `rgba(255, 255, 255, 1.0)`;
+        drawZariBorders(ctx);
+        ctx.stroke();
+
+        // Blinding white specular flares on jewelry
+        drawFlare(ctx, -8, -68, 12);
+        drawFlare(ctx, 4, -58, 14);
+        drawFlare(ctx, -14, 38, 10); // Ankle bell glare
+        drawFlare(ctx, 14, 38, 10);
+      }
+
+      ctx.restore();
+
+      // Canvas Status Info
+      ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+      ctx.font = "12px monospace";
+      ctx.fillText(`Mood: ${cfg.name} | CCT: ${kelvin}K | ${isDiffused ? "DIFFUSED (WARM GLOW)" : "! HARSH GLARE (SPECULAR)"}`, 16, 24);
+    }
+
+    function drawFlare(c, x, y, size) {
+      c.save();
+      c.fillStyle = "rgba(255, 255, 255, 0.95)";
+      c.beginPath();
+      c.arc(x, y, size * 0.35, 0, Math.PI * 2);
+      c.fill();
+      c.strokeStyle = "rgba(255, 255, 255, 0.85)";
+      c.lineWidth = 1.5;
+      c.beginPath();
+      c.moveTo(x - size, y); c.lineTo(x + size, y);
+      c.moveTo(x, y - size); c.lineTo(x, y + size);
+      c.stroke();
+      c.restore();
+    }
+
+    function drawZariBorders(c) {
+      c.beginPath();
+      // Fan pleats zari line
+      c.moveTo(0, 0); c.lineTo(0, 36);
+      c.moveTo(-10, 5); c.lineTo(-12, 36);
+      c.moveTo(10, 5); c.lineTo(12, 36);
+      // Sleeve borders
+      c.moveTo(-40, -22); c.lineTo(-44, -25);
+      c.moveTo(40, -22); c.lineTo(44, -25);
+      // Shoulder border
+      c.moveTo(-12, -45); c.lineTo(12, -45);
+    }
+
+    function drawClassicalDancer(c) {
+      c.beginPath();
+      // Head & Bun
+      c.arc(0, -78, 14, 0, Math.PI * 2);
+      c.arc(9, -86, 7, 0, Math.PI * 2);
+      // Torso
+      c.moveTo(-6, -64);
+      c.lineTo(6, -64);
+      c.lineTo(12, -45);
+      c.lineTo(7, -15);
+      // Arms (Natyarambham)
+      c.lineTo(26, -40);
+      c.lineTo(44, -25);
+      c.lineTo(38, -20);
+      c.lineTo(12, -35);
+      // Araimandi Legs
+      c.lineTo(16, 0);
+      c.lineTo(32, 20);
+      c.lineTo(18, 42);
+      c.lineTo(0, 38);
+      c.lineTo(-18, 42);
+      c.lineTo(-32, 20);
+      c.lineTo(-16, 0);
+      // Left Arm
+      c.lineTo(-12, -35);
+      c.lineTo(-38, -20);
+      c.lineTo(-44, -25);
+      c.lineTo(-26, -40);
+      c.closePath();
+    }
+
+    // Controls
+    const rasas = ["Bhakti", "Veera", "Roudra", "Adbhuta", "Shanta"];
+    rasas.forEach(r => {
+      const key = r.toLowerCase();
+      const el = document.getElementById("rasa" + r);
+      el.addEventListener("click", () => {
+        currentRasa = key;
+        rasas.forEach(other => document.getElementById("rasa" + other).classList.toggle("active", other === r));
+        const targetK = rasaConfigs[key].kelvin;
+        kelvin = targetK;
+        document.getElementById("kelvinSlider").value = targetK;
+        document.getElementById("kelvinVal").textContent = targetK + "K";
+        render();
+      });
+    });
+
+    const kelvinSlider = document.getElementById("kelvinSlider");
+    const kelvinVal = document.getElementById("kelvinVal");
+    kelvinSlider.addEventListener("input", (e) => {
+      kelvin = parseInt(e.target.value, 10);
+      kelvinVal.textContent = kelvin + "K";
+      render();
+    });
+
+    const btnDiffSoft = document.getElementById("btnDiffSoft");
+    const btnDiffBare = document.getElementById("btnDiffBare");
+    const glareStatus = document.getElementById("glareStatus");
+
+    btnDiffSoft.addEventListener("click", () => {
+      isDiffused = true;
+      btnDiffSoft.classList.add("active");
+      btnDiffBare.classList.remove("active");
+      glareStatus.textContent = "✔ Zari Luminous (No Glare)";
+      glareStatus.style.color = "#6ee7b7";
+      render();
+    });
+
+    btnDiffBare.addEventListener("click", () => {
+      isDiffused = false;
+      btnDiffBare.classList.add("active");
+      btnDiffSoft.classList.remove("active");
+      glareStatus.textContent = "⚠ Severe Specular Glare";
+      glareStatus.style.color = "#fda4af";
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>

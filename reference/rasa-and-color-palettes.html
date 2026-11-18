@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reference: Navarasa Color Palettes & Kelvin Cheat Sheet</title>
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    .color-swatch-cell {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .swatch {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.25);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <span class="lesson-tag">Reference Document 03</span>
+      <h1>Navarasa Theatrical Color & Kelvin Reference</h1>
+      <p class="subtitle">Emotional color palettes from the Natya Shastra, Kelvin color temperatures, and gel filter equivalents.</p>
+    </header>
+
+    <section>
+      <h2>1. The Navarasa Color Grammar (Indian Classical Dance)</h2>
+      <p>
+        In Indian dramaturgy (Bharata Muni's <em>Natya Shastra</em>), color is not merely decorative; it is an emotional frequency directly tied to the primary sentiment (<em>Rasa</em>) and inner psychological state (<em>Bhava</em>) of the dancer.
+      </p>
+
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Rasa (Emotion)</th>
+            <th>Traditional Color</th>
+            <th>Stage Color Palette (Kelvin / Gels)</th>
+            <th>Theatrical Role in Dance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="term">Shringara (Love / Romance)</td>
+            <td>
+              <div class="color-swatch-cell">
+                <div class="swatch" style="background: #f43f5e;"></div>
+                <span>Rose / Dark Blue</span>
+              </div>
+            </td>
+            <td>Warm Rose (Lee 107), Soft Amber (3000K), Pale Lavender</td>
+            <td>Warm, flattering facial tones; softens shadow edges on eye expressions (<em>Abhinaya</em>).</td>
+          </tr>
+          <tr>
+            <td class="term">Bhakti / Devotion</td>
+            <td>
+              <div class="color-swatch-cell">
+                <div class="swatch" style="background: #f59e0b;"></div>
+                <span>Tungsten Gold</span>
+              </div>
+            </td>
+            <td>Deep Amber (2800K–3200K, Lee 104 / 204), Golden Wash</td>
+            <td>Evokes sacred temple sanctum (*Garbhagriha*) and glowing brass oil *diyas*.</td>
+          </tr>
+          <tr>
+            <td class="term">Veera (Valor / Heroism)</td>
+            <td>
+              <div class="color-swatch-cell">
+                <div class="swatch" style="background: #fbbf24;"></div>
+                <span>Gaura (Bright Gold)</span>
+              </div>
+            </td>
+            <td>Crisp Warm White (3500K–4000K), High-Intensity Side Cuts</td>
+            <td>Sharp, proud angles emphasizing expanded chest and heroic posture.</td>
+          </tr>
+          <tr>
+            <td class="term">Roudra (Anger / Fury)</td>
+            <td>
+              <div class="color-swatch-cell">
+                <div class="swatch" style="background: #dc2626;"></div>
+                <span>Rakta (Blood Red)</span>
+              </div>
+            </td>
+            <td>Deep Ruby Red (Lee 106) on cyc, harsh Amber cross-key</td>
+            <td>Used in slaying of demons (e.g., Mahishasuramardini) or Shiva's destructive Tandavam.</td>
+          </tr>
+          <tr>
+            <td class="term">Karuna (Compassion / Sorrow)</td>
+            <td>
+              <div class="color-swatch-cell">
+                <div class="swatch" style="background: #94a3b8;"></div>
+                <span>Kapota (Dove Grey)</span>
+              </div>
+            </td>
+            <td>Desaturated Pale Lavender (Lee 136), Cool Low Key</td>
+            <td>Muted intensity; evokes longing, separation (*Viraha*), and quiet grief.</td>
+          </tr>
+          <tr>
+            <td class="term">Adbhuta (Wonder / Cosmic)</td>
+            <td>
+              <div class="color-swatch-cell">
+                <div class="swatch" style="background: #38bdf8;"></div>
+                <span>Yellow & Cyan</span>
+              </div>
+            </td>
+            <td>Warm Golden Key + 5600K Steel Blue Rim (Lee 201)</td>
+            <td>High contrast separating the dancer from an ethereal cosmic background.</td>
+          </tr>
+          <tr>
+            <td class="term">Shanta (Peace / Tranquility)</td>
+            <td>
+              <div class="color-swatch-cell">
+                <div class="swatch" style="background: #e2e8f0;"></div>
+                <span>Pure White</span>
+              </div>
+            </td>
+            <td>Neutral Warm White (3500K–4000K), Even Ambient Wash</td>
+            <td>Balanced, calm, shadowless harmony; standard conclusion of a traditional Margam (Mangalam).</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>2. Managing Silk Saree Reflectance (Zari & Temple Jewelry)</h2>
+      <p>
+        Traditional Indian dance costumes (pure silk Kanjeevarams, Banarasi brocades) contain metallic threads (<em>zari</em>) made of silver wire wrapped around silk and electroplated with pure gold.
+      </p>
+
+      <table class="ref-table">
+        <thead>
+          <tr>
+            <th>Reflection Type</th>
+            <th>Cause on Stage</th>
+            <th>Solution for Lighting Designers</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="term">Specular Reflection (Harsh Glare)</td>
+            <td>Point-source fixtures (bare LED bulbs, hard-edge profile spots) hitting polished gold zari and temple brass jewelry.</td>
+            <td><strong>Add Diffusion (Frost):</strong> Place diffusion gels (e.g., Rosco 119 Hamburg Frost, Lee 250 Half White Diffusion) in front of the fixture to spread the beam into a soft, glowing source.</td>
+          </tr>
+          <tr>
+            <td class="term">Diffuse Reflection (Rich Fabric Color)</td>
+            <td>Light penetrating silk fibers and scattering naturally, revealing the rich woven dye (peacock green, crimson, turmeric yellow).</td>
+            <td><strong>Keep Key Temperature at 3000K–3200K:</strong> Rich warm light stimulates red and yellow silk dyes. Cool light (5600K+) turns warm silks muddy and grey.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="lesson-footer">
+      <span><a href="../index.html">&larr; Dashboard</a> &bull; Reference Cheat Sheet #03</span>
+      <span><a href="../lessons/0003-color-temperature-rasa-and-silk-reflectance.html">Open Lesson 03 &rarr;</a></span>
+    </footer>
+  </div>
+</body>
+</html>
